@@ -1,31 +1,14 @@
-const express = require('express')
-const router = express.Router()
+const productController = require('../controllers/productController.js')
+const adminController = require('../controllers/adminController.js')
+
+
+module.exports = app => {
 
 
 
-const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
-const passport = require('../config/passport')
+  app.get('/', (req, res) => res.redirect('/products'))
+  app.get('/products', productController.getProducts)
 
-
-const authenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/signin')
-}
-const authenticatedAdmin = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    if (req.user.isAdmin) { return next() }
-    return res.redirect('/')
-  }
-  res.redirect('/signin')
-}
-
-
-
-
-
-
-
-module.exports = router
+  app.get('/admin', (req, res) => res.redirect('/admin/products'))
+  app.get('/admin/products', adminController.getProducts)
+} 

@@ -19,6 +19,7 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <div>
+        <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
         {{#if user.isAdmin}}
         <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
         {{/if}}
@@ -26,6 +27,9 @@
         <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
         <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+        {{else}}
+        <a href="/login"><button class="btn btn-outline-success my-2 my-sm-0">LogIn</button></a> / <a
+          href="/singin"><button class="btn btn-outline-success my-2 my-sm-0">SignIn</button></a>
         {{/if}}
       </div>
     </div>
