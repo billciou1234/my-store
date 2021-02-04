@@ -7,15 +7,21 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
   getProducts: (req, res) => {
-    return res.render('admin/products')
+    return Product.findAll({
+      raw: true,
+      nest: true,
+      include: [Category]
+    }).then(products => {
+
+      console.log(products) // 加入 console 觀察資料的變化
+      return res.render('admin/products', { products: products })
+    })
   },
   getProduct: (req, res) => {
     return res.render('admin/product')
   },
 
 }
-
-
 
 
 module.exports = adminController
