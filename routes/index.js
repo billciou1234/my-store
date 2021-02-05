@@ -34,4 +34,8 @@ module.exports = app => {
   app.delete('/admin/categories/:id', categoryController.deleteCategory)
 
 
+  app.get('/admin/users', adminController.getUserslist)
+  app.put('/admin/users/:id', adminController.putUsersadmin)
+
+
 } 

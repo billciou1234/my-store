@@ -144,6 +144,34 @@ const adminController = {
   },
 
 
+  getUserslist: (req, res) => {
+    return User.findAll({ raw: true }).then(users => {
+      return res.render('admin/users', { users: users })
+    })
+  },
+  putUsersadmin: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        if (req.body.role === 'true') {
+          user.update({
+            role: 'admin'
+          })
+            .then((user) => {
+              req.flash('success_messages', 'user was successfully set to admin')
+              return res.redirect('/admin/users')
+            })
+        } else {
+          user.update({
+            role: 'custom'
+          })
+            .then((user) => {
+              req.flash('success_messages', 'user was successfully set to custom')
+              return res.redirect('/admin/users')
+            })
+        }
+      })
+  }
+
 }
 
 
