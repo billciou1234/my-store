@@ -19,17 +19,19 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <div>
-        <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
-        {{#if user.isAdmin}}
-        <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
-        {{/if}}
         {{#if user}}
-        <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
+        <a href="/cart" style="color: white;margin-right: 10px;">購物車</a>
+        {{/if}}
+        {{#ifCond user.role 'admin'}}
+        <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
+        {{/ifCond}}
+        {{#if user}}
+        <span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
         <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
         {{else}}
-        <a href="/login"><button class="btn btn-outline-success my-2 my-sm-0">LogIn</button></a> / <a
-          href="/singin"><button class="btn btn-outline-success my-2 my-sm-0">SignIn</button></a>
+        <a href="/signin"><button class="btn btn-outline-success my-2 my-sm-0">SignIn</button></a> / <a
+          href="/signup"><button class="btn btn-outline-success my-2 my-sm-0">SignUp</button></a>
         {{/if}}
       </div>
     </div>

@@ -1,17 +1,12 @@
-<div>
-  Product
-</div>
-
-
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="/restaurants">首頁</a>
+    <a class="nav-link active" href="/products">首頁</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/restaurants/feeds">最新動態</a>
+    <a class="nav-link" href="/products/feeds">最新動態</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/restaurants/top">TOP10 人氣商品</a>
+    <a class="nav-link" href="/products/top">TOP10 人氣商品</a>
   </li>
   {{!-- <li class="nav-item">
     <a class="nav-link" href="/users/top">達人</a>
@@ -46,7 +41,11 @@
         </p>
         <span class="badge badge-secondary">{{this.categoryName}}</span>
         <p class="card-text">{{this.description}}</p>
-        <div class="row">
+        <div class="row float-right">
+          <form action="/cart" method="POST">
+            <input type="hidden" name="productId" value="{{this.id}}">
+            <button type="submit" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+          </form>
           {{!-- {{#if this.isFavorited }}
           <form action="/favorite/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-danger">移除最愛</button>

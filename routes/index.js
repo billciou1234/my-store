@@ -1,12 +1,36 @@
 const productController = require('../controllers/productController.js')
 const adminController = require('../controllers/adminController.js')
 const categoryController = require('../controllers/categoryController.js')
+const cartController = require('../controllers/cartController.js')
+const userController = require('../controllers/userController.js')
+
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const passport = require('../config/passport')
+
+const authenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect('/signin')
+}
+const authenticatedAdmin = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    if (req.user.role === 'admin') { return next() }
+    return res.redirect('/')
+  }
+  res.redirect('/signin')
+}
+
 
 module.exports = app => {
 
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', upload.single('image'), userController.signUp)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+  app.get('/logout', userController.logout)
 
   //custom
   app.get('/', (req, res) => res.redirect('/products'))
@@ -16,26 +40,31 @@ module.exports = app => {
 
 
   // admin
-  app.get('/admin', (req, res) => res.redirect('/admin/products'))
-  app.get('/admin/products', adminController.getProducts)
-  app.get('/admin/products/create', adminController.createProduct)
-  app.post('/admin/products', upload.single('image'), adminController.postProduct)
-  app.get('/admin/products/:id', adminController.getProduct)
-  app.get('/admin/products/:id/edit', adminController.editProduct)
-  app.put('/admin/products/:id', upload.single('image'), adminController.putProduct)
-  app.delete('/admin/products/:id', adminController.deleteProduct)
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/products'))
+  app.get('/admin/products', authenticatedAdmin, adminController.getProducts)
+  app.get('/admin/products/create', authenticatedAdmin, adminController.createProduct)
+  app.post('/admin/products', authenticatedAdmin, upload.single('image'), adminController.postProduct)
+  app.get('/admin/products/:id', authenticatedAdmin, adminController.getProduct)
+  app.get('/admin/products/:id/edit', authenticatedAdmin, adminController.editProduct)
+  app.put('/admin/products/:id', authenticatedAdmin, upload.single('image'), adminController.putProduct)
+  app.delete('/admin/products/:id', authenticatedAdmin, adminController.deleteProduct)
 
 
 
-  app.get('/admin/categories', categoryController.getCategories)
-  app.post('/admin/categories', categoryController.postCategory)
-  app.get('/admin/categories/:id', categoryController.getCategories)
-  app.put('/admin/categories/:id', categoryController.putCategory)
-  app.delete('/admin/categories/:id', categoryController.deleteCategory)
+  app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
+  app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
+  app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
+  app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
 
-  app.get('/admin/users', adminController.getUserslist)
-  app.put('/admin/users/:id', adminController.putUsersadmin)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUserslist)
+  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsersadmin)
 
+
+
+
+  app.get('/cart', cartController.getCart)
+  app.post('/cart', cartController.postCart)
 
 } 
