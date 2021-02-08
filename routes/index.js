@@ -11,7 +11,7 @@ module.exports = app => {
   //custom
   app.get('/', (req, res) => res.redirect('/products'))
   app.get('/products', productController.getProducts)
-
+  app.get('/products/:id', productController.getProduct)
 
 
 
