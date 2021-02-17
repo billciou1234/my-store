@@ -40,14 +40,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
-// app.use(session({
-//   secret: 'ac',
-//   name: 'ac',
-//   cookie: { maxAge: 80000 },
-//   resave: false,
-//   saveUninitialized: true,
-// }))
+// app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
+app.use(session({
+  secret: 'ms',
+  name: 'ms',
+  cookie: { maxAge: 80000 },
+  resave: false,
+  saveUninitialized: true,
+}))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())

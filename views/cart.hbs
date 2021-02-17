@@ -29,14 +29,14 @@
               <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
             </form>
             <span style="margin: 0 20px;">
-              {{this.CartItemquantity}}
+              {{this.quantity}}
             </span>
             <form action="/cartItem/{{this.CartItemId}}/sub" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
             </form>
           </div>
         </td>
-        <td>{{this.price}} * {{this.CartItemquantity}}</td>
+        <td>{{this.price}} * {{this.quantity}}</td>
         <td>
           <form action="/cartItem/{{this.CartItemId}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-link">

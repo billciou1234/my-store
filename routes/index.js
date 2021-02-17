@@ -62,9 +62,10 @@ module.exports = app => {
   app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsersadmin)
 
 
-
-
-  app.get('/cart', cartController.getCart)
-  app.post('/cart', cartController.postCart)
+  app.get('/cart', authenticated, cartController.getCart)
+  app.post('/cart', authenticated, cartController.postCart)
+  app.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
+  app.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
+  app.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
 
 } 
