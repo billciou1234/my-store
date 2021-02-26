@@ -3,7 +3,7 @@ const adminController = require('../controllers/adminController.js')
 const categoryController = require('../controllers/categoryController.js')
 const cartController = require('../controllers/cartController.js')
 const userController = require('../controllers/userController.js')
-
+const orderController = require('../controllers/orderController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -67,5 +67,12 @@ module.exports = app => {
   app.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
   app.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
   app.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
+
+  app.get('/orders', authenticated, orderController.getOrders)
+  app.post('/order', authenticated, orderController.postOrder)
+  app.post('/order/:id/cancel', authenticated, orderController.cancelOrder)
+  app.get('/orders/:id', authenticated, orderController.getOrder)
+
+
 
 } 

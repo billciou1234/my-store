@@ -23,6 +23,7 @@
       <div>
         {{#if user}}
         <a href="/cart" style="color: white;margin-right: 10px;">購物車</a>
+        <a href="/orders" style="color: white;margin-right: 10px;">訂單</a>
         {{/if}}
         {{#ifCond user.role 'admin'}}
         <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>

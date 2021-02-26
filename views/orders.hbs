@@ -1,0 +1,35 @@
+<div class="col align-self-center">
+
+  {{#each orders}}
+
+  <div class="card w-75">
+    <div class="card-body">
+      <h5 class="card-title">訂單編號{{this.sn}}</h5>
+      <p>訂單資料:</p>
+      <ul>
+        <li>收件人姓名: {{this.name}}</li>
+        <li>收件地址: {{this.address}}</li>
+        <li>收件人電話: {{this.phone}}</li>
+        <li>訂單狀態: {{this.shipping_status}}</li>
+        <li>付款狀態: {{this.payment_status}}</li>
+      </ul>
+
+      <h4 class="text-right">訂單金額: {{this.amount}}</h4>
+
+
+
+      <div class="d-flex justify-content-end">
+
+        <a href="/order/{{this.id}}/payment" class="btn btn-primary m-1">立即付款</a>
+        <a href="/orders/{{this.id}}" class="btn btn-primary m-1">訂單內容</a>
+        <form action="/order/{{this.id}}/cancel" method="POST">
+          <button type="submit" class="btn btn-danger m-1">取消訂單</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <br />
+  {{/each}}
+
+</div>
