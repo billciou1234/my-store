@@ -1,35 +1,49 @@
-<div class="col align-self-center">
+<div class="container">
 
-  {{#each orders}}
+  <div class="d-flex flex-column center">
 
-  <div class="card w-75">
-    <div class="card-body">
-      <h5 class="card-title">訂單編號{{this.sn}}</h5>
-      <p>訂單資料:</p>
-      <ul>
-        <li>收件人姓名: {{this.name}}</li>
-        <li>收件地址: {{this.address}}</li>
-        <li>收件人電話: {{this.phone}}</li>
-        <li>訂單狀態: {{this.shipping_status}}</li>
-        <li>付款狀態: {{this.payment_status}}</li>
-      </ul>
+    {{#each orders}}
 
-      <h4 class="text-right">訂單金額: {{this.amount}}</h4>
+    <div class="card w-75 m-1">
+      <div class="card-body">
+        <h5 class="card-title">訂單編號{{this.sn}}</h5>
+        <p>訂單資料:</p>
+        <ul>
+          <li>收件人姓名: {{this.name}}</li>
+          <li>收件地址: {{this.address}}</li>
+          <li>收件人電話: {{this.phone}}</li>
+          <li>訂單狀態: {{#ifCond this.shipping_status -1 }} 已取消訂單 {{/ifCond}}{{#ifCond this.shipping_status 0 }} 已成立訂單
+            {{/ifCond}}{{#ifCond this.shipping_status 1 }} 已完成訂單 {{/ifCond}}</li>
+          <li>付款狀態: {{#ifCond this.payment_status -1 }} 付款失敗
+            {{/ifCond}}{{#ifCond this.payment_status 0 }} 未付款
+            {{/ifCond}}{{#ifCond this.payment_status 1 }} 成功付款 {{/ifCond}}</li>
+        </ul>
+
+        <h4 class="text-right">訂單金額: {{this.amount}}</h4>
 
 
 
-      <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end">
+          {{#ifCond this.shipping_status 0 }}
+          <a href="/order/{{this.id}}/payment" class="btn btn-primary m-1">立即付款</a>
+          {{/ifCond}}
 
-        <a href="/order/{{this.id}}/payment" class="btn btn-primary m-1">立即付款</a>
-        <a href="/orders/{{this.id}}" class="btn btn-primary m-1">訂單內容</a>
-        <form action="/order/{{this.id}}/cancel" method="POST">
-          <button type="submit" class="btn btn-danger m-1">取消訂單</button>
-        </form>
+          <a href="/orders/{{this.id}}" class="btn btn-primary m-1">訂單內容</a>
+
+
+          {{#ifCond this.shipping_status 0 }}
+          <form action="/order/{{this.id}}/cancel" method="POST">
+            <button type="submit" class="btn btn-danger m-1">取消訂單</button>
+          </form>
+          {{/ifCond}}
+
+        </div>
+
       </div>
-
     </div>
+    <br />
+    {{/each}}
+
   </div>
-  <br />
-  {{/each}}
 
 </div>

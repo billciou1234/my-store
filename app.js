@@ -44,7 +44,7 @@ app.use(bodyParser.json())
 app.use(session({
   secret: 'ms',
   name: 'ms',
-  cookie: { maxAge: 80000 },
+  cookie: { maxAge: 10 * 60 * 1000 }, //10min
   resave: false,
   saveUninitialized: true,
 }))

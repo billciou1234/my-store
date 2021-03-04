@@ -75,4 +75,8 @@ module.exports = app => {
 
 
 
+  app.get('/order/:id/payment', orderController.getPayment)
+  app.post('/newebpay/callback', orderController.newebpayCallback)
+
+
 } 
