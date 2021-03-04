@@ -27,10 +27,16 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
-    user = user.toJSON() // 此處與影片示範不同
-    return cb(null, user)
+  User.findByPk(id, {
+    include: [
+      { model: db.Product, as: 'FavoritedProducts' },
+
+    ]
   })
+    .then(user => {
+      user = user.toJSON() // 此處與影片示範不同
+      return cb(null, user)
+    })
 })
 
 module.exports = passport

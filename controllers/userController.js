@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Favorite = db.Favorite
+// const Comment = db.Comment
+const Product = db.Product
+const Category = db.Category
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -76,6 +80,31 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/products')
+  },
+
+  addFavorite: (req, res) => {
+    return Favorite.create({
+      UserId: req.user.id,
+      ProductId: req.params.productId
+    }).then((product) => {
+      req.flash('success_messages', 'success add like')
+      return res.redirect('back')
+    })
+  },
+
+  removeFavorite: (req, res) => {
+    return Favorite.findOne({
+      where: {
+        UserId: req.user.id,
+        ProductId: req.params.productId
+      }
+    }).then((favorite) => {
+      favorite.destroy()
+        .then((product) => {
+          req.flash('success_messages', 'success remove！')
+          return res.redirect('back')
+        })
+    })
   },
 }
 module.exports = userController

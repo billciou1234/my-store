@@ -37,7 +37,7 @@ module.exports = app => {
   app.get('/products', productController.getProducts)
   app.get('/products/:id', productController.getProduct)
 
-
+  // authenticated,
 
   // admin
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/products'))
@@ -78,5 +78,6 @@ module.exports = app => {
   app.get('/order/:id/payment', orderController.getPayment)
   app.post('/newebpay/callback', orderController.newebpayCallback)
 
-
+  app.post('/favorite/:productId', authenticated, userController.addFavorite)
+  app.delete('/favorite/:productId', authenticated, userController.removeFavorite)
 } 

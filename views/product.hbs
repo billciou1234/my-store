@@ -4,29 +4,48 @@
     <p>[{{product.Category.name}}]</p>
   </div>
   <div class="col-md-4">
-    <img class="img-responsive center-block" src="{{product.image}}" style="width: 250px;margin-bottom: 25px;">
+    <img class="img-responsive center-block" src="{{product.image}}" style="width: 300px;margin-bottom: 25px;">
     <div class="well">
       <ul class="list-unstyled">
-        <li><strong>Opening Hour:</strong> {{product.opening_hours}}</li>
-        <li><strong>Tel:</strong> {{product.tel}}</li>
-        <li><strong>Address:</strong> {{product.address}}</li>
+        {{!-- <li><strong>商品敘述:</strong> {{product.description}}</li> --}}
+        <li><strong>金額:</strong> {{product.price}}</li>
+        {{!-- <li><strong>Address:</strong> {{product.address}}</li> --}}
       </ul>
     </div>
   </div>
-  <div class="col-md-8">
-    <p>{{product.description}}</p>
+  <div class="col-mb-8">
+    <p>商品敘述 : {{product.description}}</p>
     <br />
+
     <br />
-    <a href="/products/{{product.id}}/dashboard" class="btn btn-primary">Dashboard</a>
-    {{!-- {{#if isFavorited }}
+  </div>
+  <div class="row align-self-end">
+    {{#if user}}
+    <a href="/products/{{product.id}}/dashboard" class="btn btn-primary m-1">Dashboard</a>
+    {{#if isFavorited }}
     <form action="/favorite/{{product.id}}?_method=DELETE" method="POST" style="display: contents;">
-      <button type="submit" class="btn btn-danger">移除最愛</button>
+      <button type="submit" class="btn btn-danger m-1">Remove Like</button>
     </form>
     {{else}}
     <form action="/favorite/{{product.id}}" method="POST" style="display: contents;">
-      <button type="submit" class="btn btn-primary">加到最愛</button>
+      <button type="submit" class="btn btn-primary m-1">Add Like</button>
     </form>
-    {{/if}} --}}
+    {{/if}}
+    <form action="/cart" method="POST">
+      <input type="hidden" name="productId" value="{{product.id}}">
+      <button type="submit" class="btn btn-primary m-1">Add to Cart</button>
+    </form>
+    {{else}}
+    <a href="/products/{{product.id}}/dashboard" class="btn btn-primary m-1">Dashboard</a>
+    <form action="/favorite/{{product.id}}" method="POST" style="display: contents;">
+      <button type="submit" class="btn btn-primary m-1">Add Like</button>
+    </form>
+    <form action="/cart" method="POST">
+      <input type="hidden" name="productId" value="{{product.id}}">
+      <button type="submit" class="btn btn-primary m-1">Add to Cart</button>
+    </form>
+    {{/if}}
+
   </div>
   <hr>
 
