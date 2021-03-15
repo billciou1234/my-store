@@ -43,11 +43,6 @@ const productController = {
         }))
       }
 
-
-
-
-
-
       Category.findAll({
         raw: true,
         nest: true
@@ -71,26 +66,111 @@ const productController = {
         include: [
           Category,
           { model: User, as: 'FavoritedUsers' },
-          // { model: Comment, include: [User] }
+          { model: Comment, include: [User] }
         ]
       }).then(product => {
+        product.viewCounts = product.viewCounts + 1
         const isFavorited = product.FavoritedUsers.map(d => d.id).includes(req.user.id)
-        return res.render('product', {
-          product: product.toJSON(),
-          isFavorited: isFavorited,
+        product.save().then(product => {
+          return res.render('product', {
+            product: product.toJSON(),
+            isFavorited: isFavorited
+          })
         })
       })
     } else {
       return Product.findByPk(req.params.id, {
-        include: Category
+        include: [
+          Category,
+          { model: Comment, include: [User] }
+        ]
       }).then(product => {
-        return res.render('product', {
-          product: product.toJSON(),
+        product.viewCounts = product.viewCounts + 1
+        product.save().then(product => {
+          return res.render('product', {
+            product: product.toJSON()
+          })
         })
       })
     }
 
   },
+  getDashboard: (req, res) => {
+    return Product.findByPk(req.params.id, {
+      include: [
+        Category,
+        { model: User, as: 'FavoritedUsers' },
+        { model: Comment, include: [User] }
+      ]
+    }).then(product => {
 
+      return res.render('dashboard', { product: product.toJSON() })
+    })
+  },
+
+  getFeeds: (req, res) => {
+    return Promise.all([
+      Product.findAll({
+        limit: 10,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [Category]
+      }),
+      Comment.findAll({
+        limit: 10,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [User, Product]
+      })
+
+    ]).then(([products, comments]) => {
+      return res.render('feeds', {
+        products: products,
+        comments: comments
+      })
+    })
+  },
+  getTopProducts: (req, res, callback) => {
+    return Product.findAll({
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    }).then(products => {
+
+      if (req.user) {
+        products = products.map(d => (
+          {
+            ...d.dataValues,
+            description: d.description.substring(0, 50),
+            isFavorited: req.user.FavoritedProducts.map(d => d.id).includes(d.id),
+            FavoriteCount: d.FavoritedUsers.length
+          }
+        ))
+        products = products.sort((a, b) => a.FavoriteCount < b.FavoriteCount ? 1 : -1).slice(0, 10)
+
+        return res.render('topproducts', {
+          products: products,
+          isAuthenticated: req.isAuthenticated
+        })
+      } else {
+        products = products.map(d => (
+          {
+            ...d.dataValues,
+            description: d.description.substring(0, 50),
+            FavoriteCount: d.FavoritedUsers.length
+          }
+        ))
+        products = products.sort((a, b) => a.FavoriteCount < b.FavoriteCount ? 1 : -1).slice(0, 10)
+
+        return res.render('topproducts', {
+          products: products,
+          isAuthenticated: req.isAuthenticated
+        })
+      }
+
+    })
+  }
 }
 module.exports = productController 

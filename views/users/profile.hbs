@@ -1,0 +1,22 @@
+<div class="card" style="width: 60rem;">
+  <div class="row no-gutters">
+    <div class="col-auto">
+      <img src="{{user.image}}" class="img-fluid" alt="" style="width:300px;height:300px;">
+    </div>
+    <div class="list-unstyled list-inline ml-5 mt-3">
+      <div class="card-block px-2">
+        <h4 class="card-title">{{user.name}}</h4>
+        <p class="card-text">{{user.email}}</p>
+        <br />
+        <ul>
+          <li><strong>{{user.Comments.length}}</strong> 已評論商品</li>
+          <li><strong>{{user.FavoritedProducts.length}}</strong> 喜愛的商品</li>
+        </ul>
+        {{#ifCond user.id user.id }}
+        <a href="/users/{{user.id}}/edit"><button type="submit" class="btn btn-primary">Edit</button></a>
+        {{/ifCond}}
+
+      </div>
+    </div>
+  </div>
+</div>

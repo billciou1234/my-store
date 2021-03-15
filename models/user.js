@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Order)
 
-      // User.hasMany(models.Comment)
+      User.hasMany(models.Comment)
       User.belongsToMany(models.Product, {
         through: models.Favorite,
         foreignKey: 'UserId',

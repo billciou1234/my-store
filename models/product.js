@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ProductId',
         as: 'FavoritedUsers'
       })
+      Product.hasMany(models.Comment)
     }
   };
   Product.init({
@@ -27,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     price: DataTypes.INTEGER,
     image: DataTypes.STRING,
-    CategoryId: DataTypes.INTEGER
+    CategoryId: DataTypes.INTEGER,
+    viewCounts: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Product',

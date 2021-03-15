@@ -109,7 +109,7 @@ function getTradeInfo(Amt, Desc, email) {
 
 let orderController = {
   getOrders: (req, res) => {
-    Order.findAll({ where: { UserId: req.user.id } })
+    Order.findAll({ order: [['createdAt', 'DESC']], where: { UserId: req.user.id } })
       .then(orders => {
 
 
