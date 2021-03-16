@@ -121,7 +121,8 @@ let orderController = {
           address: p.dataValues.address,
           shipping_status: p.dataValues.shipping_status,
           payment_status: p.dataValues.payment_status,
-          sn: p.dataValues.sn
+          sn: p.dataValues.sn,
+          time: p.dataValues.createdAt.toISOString().replace(/T/, ' ').substr(0, 19)
         }))
 
         return res.render('orders', {
