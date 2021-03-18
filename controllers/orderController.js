@@ -166,8 +166,8 @@ let orderController = {
           UserId: req.user.id,
         }).then(order => {
 
-          let results = [];
-          for (var i = 0; i < cartitem.length; i++) {
+          let results = []
+          for (let i = 0; i < cartitem.length; i++) {
 
             results.push(
               OrderItem.create({
@@ -183,7 +183,10 @@ let orderController = {
             from: 'huntekbill@gmail.com',
             to: req.user.email,
             subject: `${order.sn} 訂單成立`,
-            text: `${order.sn} 訂單成立`,
+            text: `${order.sn} 訂單成立,
+            總金額:${req.body.amount},
+            收件人:${req.body.name},
+            收件地址:${req.body.address}`,
           }
 
           transporter.sendMail(mailOptions, function (error, info) {

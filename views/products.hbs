@@ -45,27 +45,19 @@
         {{#if isFavorited }}
         <form action="/favorite/{{this.id}}?_method=DELETE" method="POST">
           <button type="submit" class="btn"><i class="fas fa-heart"></i></button>
+        </form>
+        {{else}}
+        <form action="/favorite/{{this.id}}" method="POST">
+          <button type="submit" class="btn"><i class="far fa-heart"></i></button>
+        </form>
+        {{/if}}
 
-          {{else}}
-          <form action="/favorite/{{this.id}}" method="POST">
-            <button type="submit" class="btn"><i class="far fa-heart"></i></button>
-            {{/if}}
-
-            <div class="row float-right">
-              <form action="/cart" method="POST">
-                <input type="hidden" name="productId" value="{{this.id}}">
-                <button type="submit" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
-              </form>
-              {{!-- {{#if this.isLiked }}
-          <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-danger ml-1">dislike</button>
+        <div class="row float-right">
+          <form action="/cart" method="POST">
+            <input type="hidden" name="productId" value="{{this.id}}">
+            <button type="submit" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
           </form>
-          {{else}}
-          <form action="/like/{{this.id}}" method="POST">
-            <button type="submit" class="btn btn-primary ml-1">like</button>
-          </form>
-          {{/if}} --}}
-            </div>
+        </div>
       </div>
     </div>
   </div>
