@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 })
 
 
-const URL = 'https://2702fbb721a3.ngrok.io'
+const URL = 'https://ms-jewelry-store.herokuapp.com/'
 const MerchantID = 'MS318742689'
 const HashKey = 'BuRQTj5dtVo6ZEr0MC93qYRnwo5n6vDn'
 const HashIV = 'CqriRJryrnbexPoP'
