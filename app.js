@@ -3,7 +3,7 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
-const session = require('cookie-session')
+const session = require('express-session')
 const methodOverride = require('method-override')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
@@ -44,7 +44,7 @@ app.use(bodyParser.json())
 app.use(session({
   secret: 'secret',
   name: 'ms',
-  cookie: { maxAge: 10 * 60 * 1000 }, //10min
+  // cookie: { maxAge: 10 * 60 * 1000 }, //10min
   resave: false,
   saveUninitialized: false,
 }))
