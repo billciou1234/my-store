@@ -43,8 +43,8 @@ app.use(bodyParser.json())
 // app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 app.use(session({
   secret: 'secret',
-  // name: 'ms',
-  // cookie: { maxAge: 10 * 60 * 1000 }, //10min
+  name: 'ms',
+  cookie: { maxAge: 10 * 60 * 1000 }, //10min
   resave: false,
   saveUninitialized: false,
 }))
