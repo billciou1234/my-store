@@ -45,9 +45,8 @@ app.use(session({
   secret: 'secret',
   name: 'ms',
   cookie: { maxAge: 10 * 60 * 1000 }, //10min
-  store: new RedisStore(),
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
 }))
 app.use(flash())
 app.use(passport.initialize())
