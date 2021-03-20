@@ -42,9 +42,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 // app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 app.use(session({
-  secret: 'ms',
+  secret: 'secret',
   name: 'ms',
   cookie: { maxAge: 10 * 60 * 1000 }, //10min
+  store: new RedisStore(),
   resave: false,
   saveUninitialized: true,
 }))
