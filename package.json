@@ -1,16 +1,24 @@
 {
-  "name": "my-shopping",
+  "name": "ms-jewelry-store",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "_helpers.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "set \"NODE_ENV=test\" && mocha tests/*.js --exit --recursive --timeout 5000"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/billciou1234/my-store.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/billciou1234/my-store/issues"
+  },
+  "homepage": "https://github.com/billciou1234/my-store#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
