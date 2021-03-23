@@ -4,6 +4,7 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
+var MemoryStore = require('memorystore')(session)
 const methodOverride = require('method-override')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
@@ -40,15 +41,18 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-// app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
-// app.use(session({
-//   secret: 'secret',
-//   name: 'ms',
-//   cookie: { maxAge: 10 * 60 * 1000 }, //10min
-//   resave: false,
-//   saveUninitialized: false,
-// }))
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+
+app.use(session({
+  secret: 'secret',
+  name: 'ms',
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
+  cookie: { maxAge: 86400000 },
+  resave: false,
+  saveUninitialized: false,
+}))
+
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())

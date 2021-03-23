@@ -24,7 +24,7 @@ const productController = {
       let prev = page - 1 < 1 ? 1 : page - 1
       let next = page + 1 > pages ? pages : page + 1
 
-      console.log('this==============', req.user)
+      // console.log('this==============', req.user)
 
       let data = {}
       if (req.user) {
