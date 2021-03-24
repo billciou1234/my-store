@@ -1,6 +1,6 @@
 
-const productController = require('../controllers/productController.js')
 const adminController = require('../controllers/adminController.js')
+const productController = require('../controllers/productController.js')
 const categoryController = require('../controllers/categoryController.js')
 const cartController = require('../controllers/cartController.js')
 const userController = require('../controllers/userController.js')
