@@ -1,11 +1,11 @@
 
-const adminController = require('../controllers/adminController.js')
-const productController = require('../controllers/productController.js')
-const categoryController = require('../controllers/categoryController.js')
-const cartController = require('../controllers/cartController.js')
-const userController = require('../controllers/userController.js')
-const orderController = require('../controllers/orderController.js')
-const commentController = require('../controllers/commentController.js')
+let adminController = require('../controllers/adminController.js')
+let productController = require('../controllers/productController.js')
+let categoryController = require('../controllers/categoryController.js')
+let cartController = require('../controllers/cartController.js')
+let userController = require('../controllers/userController.js')
+let orderController = require('../controllers/orderController.js')
+let commentController = require('../controllers/commentController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
