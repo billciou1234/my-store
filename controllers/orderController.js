@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 })
 
 
-const URL = 'https://ms-jewelry-store.herokuapp.com/'
+const URL = 'https://32dc84436497.ngrok.io'
 const MerchantID = 'MS318742689'
 const HashKey = 'BuRQTj5dtVo6ZEr0MC93qYRnwo5n6vDn'
 const HashIV = 'CqriRJryrnbexPoP'
@@ -224,7 +224,10 @@ let orderController = {
     console.log('==========')
 
     return Order.findByPk(req.params.id, {}).then(order => {
-      const tradeInfo = getTradeInfo(order.amount, '產品名稱', 'huntekbill@gmail.com')
+      const tradeInfo = getTradeInfo(order.amount, '產品名稱', req.user.email)
+      console.log('============getPayment order======================', order)
+      console.log('============tradeInfo=============================', tradeInfo)
+      res.render('payment', { order, tradeInfo })
       order.update({
         ...req.body,
         paysn: tradeInfo.MerchantOrderNo,
@@ -249,7 +252,9 @@ let orderController = {
     console.log('===== newebpayCallback: create_mpg_aes_decrypt、data =====')
     console.log(data)
 
-    return Order.findAll({ where: { paysn: data['Result']['MerchantOrderNo'] } }).then(orders => {
+    return Order.findAll({ where: { paysn: data.Result.MerchantOrderNo } }).then(orders => {
+      console.log('============newebpayCallback order======================', orders)
+      return res.redirect('/orders')
       orders[0].update({
         ...req.body,
         payment_status: 1,
