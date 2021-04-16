@@ -254,7 +254,6 @@ let orderController = {
 
     return Order.findAll({ where: { paysn: data.Result.MerchantOrderNo } }).then(orders => {
       console.log('============newebpayCallback order======================', orders)
-      return res.redirect('/orders')
       orders[0].update({
         ...req.body,
         payment_status: 1,
